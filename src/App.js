@@ -1,23 +1,24 @@
-import logo from './logo.svg';
+import { useState } from 'react';
+import Navbar from './components/Navbar';
+import Login from './components/Login';
+import Profile from './components/Profile';
 import './App.css';
 
 function App() {
+  const [currentUser, setCurrentUser] = useState(null);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar
+        user={currentUser}
+        onLogout={() => setCurrentUser(null)}
+      />
+      <main>
+      {
+        currentUser
+          ? <Profile user={currentUser} />
+          : <Login onLoginSuccess={setCurrentUser} />
+      }
+      </main>
     </div>
   );
 }
